@@ -26,4 +26,7 @@ app.post("/add-url", async (req, res) => {
     }
 })
 
-module.exports = app;
+app.listen(port, () => {
+    console.log(`Server is running at port: ${port}`);
+    console.log("To add a URL, send a POST request to /add-url with a JSON body containing the 'name' field.");
+})

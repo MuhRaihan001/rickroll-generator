@@ -4,7 +4,7 @@ const path = require('path');
 async function addUrl(name){
     try{
         const filePath = path.join(__dirname, '../custom_urls.json');
-        let urls = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        let urls = JSON.parse(fs.readFile(filePath, 'utf8'));
         if(!Array.isArray(urls))return {status: 404, message: "File is not in expected array format."};
         if(urls.includes(name)) return {status: 404, message: "URL already exists."};
 
