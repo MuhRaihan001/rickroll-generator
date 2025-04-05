@@ -9,12 +9,8 @@ const port = 3000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
+app.use(express.static(path.join(__dirname, "public")));
 loadUrl(app);
-app.use('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-})
 app.post("/add-url", async (req, res) => {
     try {
         const { name } = req.body;
