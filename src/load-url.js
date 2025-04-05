@@ -19,7 +19,7 @@ function loadUrl(app) {
     const filePath = path.join(__dirname, '../custom_urls.json');
 
     function loadUrls() {
-        let urls = JSON.parse(fs.readFile(filePath, 'utf8'));
+        let urls = JSON.parse(fs.readFileSync(filePath, 'utf8'));
         if (!Array.isArray(urls)) return "File is not in expected array format.";
         if (urls.length === 0) return "No URLs found in the list.";
 

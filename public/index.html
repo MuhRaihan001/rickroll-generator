@@ -101,7 +101,7 @@
 
                 const text = await res.text();
                 responseDiv.style.color = res.ok ? "green" : "red";
-                responseDiv.textContent = text;
+                responseDiv.innerHTML = `${text}<br>Click the link: <a href="${res.ok ? `/${name}` : "#"}" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
             } catch (err) {
                 responseDiv.style.color = "red";
                 responseDiv.textContent = "An error occurred. Please try again later.";

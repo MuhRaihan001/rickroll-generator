@@ -24,9 +24,8 @@ app.post("/add-url", async (req, res) => {
         console.error("Error adding URL:", error);
         res.status(500).send("Internal Server Error");
     }
-})
+});
 
 app.listen(port, () => {
-    console.log(`Server is running at port: ${port}`);
-    console.log("To add a URL, send a POST request to /add-url with a JSON body containing the 'name' field.");
+    console.log(`Server is running at http://localhost:${port}`);
 })
