@@ -39,7 +39,7 @@ function generateHTML(name) {
     </style>
   </head>
   <body>
-    <p>Redirecting in <span id="countdown">5</span> seconds...</p>
+    <p>Redirecting in <span id="countdown">3</span> seconds...</p>
     <p>If you are not redirected automatically, <a href="https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK">click here</a>.</p>
   
     <script>

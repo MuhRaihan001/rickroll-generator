@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const { loadUrl } = require("./src/load-url");
 const { addUrl } = require("./src/add-url");
+const { getUrlList } = require("./src/list-url");
 const app = express();
 const port = 3000;
 
@@ -24,6 +25,16 @@ app.post("/add-url", async (req, res) => {
         res.status(500).send("Failed to add URL. Due to an internal error.");
     }
 });
+
+app.get('/list', async (req, res) =>{
+    try{
+        const data = await getUrlList();
+        res.status(data.status).send(data);
+    }catch(error){
+        console.error("Error listing URLs:", error);
+        res.status(500).send("Failed to list URLs. Due to an internal error.");
+    }
+})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

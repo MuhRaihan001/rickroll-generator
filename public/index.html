@@ -33,33 +33,34 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center justify-center px-4 relative">
+<body class="bg-gray-100 text-white min-h-screen flex flex-col items-center justify-center px-4 relative">
 
   <video autoplay loop muted class="fixed top-0 left-0 w-full h-full object-cover z-[-1] blur-md">
     <source src="assets/therickroll.mp4">
     Your browser does not support the video tag.
   </video>
-  <h1 class="text-3xl text-white font-bold mb-2 animate-fade-in">Rick Roll Your Friend</h1>
-  <p class="text-sm text-white-500 mb-1 text-center max-w-md animate-fade-in animate-delay-1">Enter something to attract your friend.</p>
-  <p class="text-sm text-white-500 mb-6 text-center max-w-md animate-fade-in animate-delay-2">Example: free v bucks</p>
+
+  <h1 class="text-3xl font-bold mb-2 animate-fade-in">Rick Roll Your Friend</h1>
+  <p class="text-sm mb-1 text-center max-w-md animate-fade-in animate-delay-1">Enter something to attract your friend.</p>
+  <p class="text-sm mb-6 text-center max-w-md animate-fade-in animate-delay-2">Example: free v bucks</p>
 
   <form id="urlForm" class="flex flex-col sm:flex-row gap-3 mb-4 animate-fade-in animate-delay-3">
     <input type="text" id="urlNameInput" placeholder="Enter URL name..." required
-           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72" />
+           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72 text-black" />
     <button type="submit"
             class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-300">
       Submit
     </button>
   </form>
 
-  <div id="response" class="text-sm text-center max-w-md mb-4"></div>
+  <div id="response" class="text-sm text-white text-center max-w-md mb-4"></div>
 
-  <p class="text-xs text-gray-400 text-center max-w-sm animate-fade-in animate-delay-3">
+  <p class="text-xs text-white/70 text-center max-w-sm animate-fade-in animate-delay-3">
     Disclaimer: This website is made for harmless fun. All generated links redirect to the Rick Astley video
     "Never Gonna Give You Up" as a joke (Rick Roll). Please use responsibly and do not use it to deceive or harm others.
   </p>
 
-  <footer class="absolute bottom-2 text-xs text-gray-400">&copy; 2025 TsumuX. All rights reserved.</footer>
+  <footer class="absolute bottom-2 text-xs text-white/70">&copy; 2025 TsumuX. All rights reserved.</footer>
 
   <script>
     document.getElementById("urlForm").addEventListener("submit", async (e) => {
@@ -68,7 +69,7 @@
       const responseDiv = document.getElementById("response");
 
       if (!name) {
-        responseDiv.className = "text-red-500";
+        responseDiv.className = "text-white";
         responseDiv.textContent = "URL name cannot be empty.";
         return;
       }
@@ -83,10 +84,10 @@
         });
 
         const text = await res.json();
-        responseDiv.className = res.ok ? "text-green-600" : "text-red-500";
-        responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" class="text-blue-500 underline" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
+        responseDiv.className = "text-white";
+        responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" class="underline" target="_blank">${res.ok ? `/${text.url}` : "Error"}</a>`;
       } catch (err) {
-        responseDiv.className = "text-red-500";
+        responseDiv.className = "text-white";
         responseDiv.textContent = "An error occurred. Please try again later.";
         console.error(err);
       }
