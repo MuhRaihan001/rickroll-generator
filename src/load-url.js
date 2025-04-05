@@ -8,7 +8,7 @@ function generateHTML(name) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${name}</title>
-    <meta http-equiv="refresh" content="5; url=https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK" />
+    <meta http-equiv="refresh" content="3; url=https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK" />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -43,7 +43,7 @@ function generateHTML(name) {
     <p>If you are not redirected automatically, <a href="https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK">click here</a>.</p>
   
     <script>
-      let seconds = 5;
+      let seconds = 3;
       const countdownEl = document.getElementById('countdown');
       const interval = setInterval(() => {
         seconds--;
@@ -53,6 +53,10 @@ function generateHTML(name) {
         }
       }, 1000);
     </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK">
+    </noscript>
+
   </body>
   </html>`;
   }

@@ -17,11 +17,11 @@ app.post("/add-url", async (req, res) => {
         if (!name) return res.status(400).send("Name is required.");
         const formatName = name.replace(/[^a-zA-Z0-9]/g, '');
         const result =  await addUrl(formatName);
-        res.send(result).status(result.status);
+        res.status(result.status).send(result);
     }
     catch (error) {
         console.error("Error adding URL:", error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("Failed to add URL. Due to an internal error.");
     }
 });
 

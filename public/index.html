@@ -1,142 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Rick Roll URL Generator</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-    
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding: 20px;
-        }
-    
-        h1 {
-            margin-bottom: 10px;
-            font-size: 2rem;
-            color: #222;
-        }
-    
-        p {
-            margin-bottom: 20px;
-            color: #666;
-        }
-    
-        form {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-    
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            width: 250px;
-            transition: border-color 0.3s;
-        }
-    
-        input[type="text"]:focus {
-            border-color: #007BFF;
-            outline: none;
-        }
-    
-        button {
-            padding: 10px 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-    
-        button:hover {
-            background-color: #0056b3;
-        }
-    
-        #response {
-            font-size: 0.95rem;
-            text-align: center;
-            max-width: 400px;
-        }
-    
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-    
-        a:hover {
-            text-decoration: underline;
-        }
-    
-        footer {
-            position: absolute;
-            bottom: 10px;
-            font-size: 0.8rem;
-            color: #aaa;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Rick Roll URL Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 0.6s ease-out forwards;
+    }
+
+    .animate-delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .animate-delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    .animate-delay-3 {
+      animation-delay: 0.6s;
+    }
+  </style>
 </head>
-<body>
-    <h1>Rick Roll Your Friend</h1>
-    <p>Enter something to attract your friend.</p>
-    <p>Example: free gta v</p>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center justify-center px-4 relative">
 
-    <form id="urlForm">
-        <input type="text" id="urlNameInput" placeholder="Enter URL name..." required />
-        <button type="submit">Submit</button>
-    </form>
+  <video autoplay loop muted class="fixed top-0 left-0 w-full h-full object-cover z-[-1] blur-md">
+    <source src="assets/therickroll.mp4">
+    Your browser does not support the video tag.
+  </video>
+  <h1 class="text-3xl text-white font-bold mb-2 animate-fade-in">Rick Roll Your Friend</h1>
+  <p class="text-sm text-white-500 mb-1 text-center max-w-md animate-fade-in animate-delay-1">Enter something to attract your friend.</p>
+  <p class="text-sm text-white-500 mb-6 text-center max-w-md animate-fade-in animate-delay-2">Example: free v bucks</p>
 
-    <div id="response"></div>
+  <form id="urlForm" class="flex flex-col sm:flex-row gap-3 mb-4 animate-fade-in animate-delay-3">
+    <input type="text" id="urlNameInput" placeholder="Enter URL name..." required
+           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72" />
+    <button type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-300">
+      Submit
+    </button>
+  </form>
 
-    <footer>
-        &copy; 2025 TsumuX. All rights reserved.
-    </footer>
+  <div id="response" class="text-sm text-center max-w-md mb-4"></div>
 
-    <script>
-        document.getElementById("urlForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const name = document.getElementById("urlNameInput").value.trim();
-            const responseDiv = document.getElementById("response");
+  <p class="text-xs text-gray-400 text-center max-w-sm animate-fade-in animate-delay-3">
+    Disclaimer: This website is made for harmless fun. All generated links redirect to the Rick Astley video
+    "Never Gonna Give You Up" as a joke (Rick Roll). Please use responsibly and do not use it to deceive or harm others.
+  </p>
 
-            if (!name) {
-                responseDiv.style.color = "red";
-                responseDiv.textContent = "URL name cannot be empty.";
-                return;
-            }
+  <footer class="absolute bottom-2 text-xs text-gray-400">&copy; 2025 TsumuX. All rights reserved.</footer>
 
-            try {
-                const res = await fetch("/add-url", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name })
-                });
+  <script>
+    document.getElementById("urlForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("urlNameInput").value.trim();
+      const responseDiv = document.getElementById("response");
 
-                const text = await res.json();
-                console.log(text);
-                responseDiv.style.color = res.ok ? "green" : "red";
-                responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
-            } catch (err) {
-                responseDiv.style.color = "red";
-                responseDiv.textContent = "An error occurred. Please try again later.";
-                console.error(err);
-            }
+      if (!name) {
+        responseDiv.className = "text-red-500";
+        responseDiv.textContent = "URL name cannot be empty.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/add-url", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name })
         });
-    </script>
+
+        const text = await res.json();
+        responseDiv.className = res.ok ? "text-green-600" : "text-red-500";
+        responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" class="text-blue-500 underline" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
+      } catch (err) {
+        responseDiv.className = "text-red-500";
+        responseDiv.textContent = "An error occurred. Please try again later.";
+        console.error(err);
+      }
+    });
+  </script>
+
 </body>
 </html>
