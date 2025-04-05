@@ -5,15 +5,58 @@ function generateHTML(name) {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${name}</title>
-    <meta http-equiv="refresh" content="0;url=https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK" />
+    <meta http-equiv="refresh" content="5; url=https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+      }
+  
+      a {
+        color: #1a73e8;
+        text-decoration: none;
+      }
+  
+      a:hover {
+        text-decoration: underline;
+      }
+  
+      #countdown {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    </style>
   </head>
   <body>
-    <p>If you are not redirected, <a href="https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK">click here</a>.</p>
+    <p>Redirecting in <span id="countdown">5</span> seconds...</p>
+    <p>If you are not redirected automatically, <a href="https://youtu.be/xvFZjo5PgG0?si=lML6mBBOYa7qPwEK">click here</a>.</p>
+  
+    <script>
+      let seconds = 5;
+      const countdownEl = document.getElementById('countdown');
+      const interval = setInterval(() => {
+        seconds--;
+        countdownEl.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+    </script>
   </body>
   </html>`;
-}
+  }
+  
 
 function loadUrl(app) {
     const filePath = path.join(__dirname, '../custom_urls.json');
