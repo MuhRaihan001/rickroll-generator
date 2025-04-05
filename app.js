@@ -15,8 +15,9 @@ app.post("/add-url", async (req, res) => {
     try {
         const { name } = req.body;
         if (!name) return res.status(400).send("Name is required.");
-        const result =  await addUrl(name);
-        res.send(result.message).status(result.status);
+        const formatName = name.replace(/[^a-zA-Z0-9]/g, '');
+        const result =  await addUrl(formatName);
+        res.send(result).status(result.status);
     }
     catch (error) {
         console.error("Error adding URL:", error);

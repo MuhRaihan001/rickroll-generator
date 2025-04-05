@@ -4,65 +4,89 @@
     <meta charset="UTF-8">
     <title>Rick Roll URL Generator</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
             background-color: #f4f4f4;
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh;
+            padding: 20px;
         }
-
+    
         h1 {
-            color: #333;
-            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            color: #222;
         }
-
+    
         p {
+            margin-bottom: 20px;
             color: #666;
-            text-align: center;
-            margin: 5px 0;
         }
-
+    
         form {
-            margin-top: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
             gap: 10px;
+            margin-bottom: 20px;
         }
-
+    
         input[type="text"] {
             padding: 10px;
-            width: 280px;
-            max-width: 90%;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 8px;
+            width: 250px;
+            transition: border-color 0.3s;
         }
-
+    
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+    
         button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            padding: 10px 16px;
+            background-color: #007BFF;
+            color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.3s;
         }
-
+    
         button:hover {
             background-color: #0056b3;
         }
-
+    
         #response {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 16px;
+            font-size: 0.95rem;
+            text-align: center;
+            max-width: 400px;
+        }
+    
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+        }
+    
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8rem;
+            color: #aaa;
         }
     </style>
 </head>
@@ -77,6 +101,10 @@
     </form>
 
     <div id="response"></div>
+
+    <footer>
+        &copy; 2025 TsumuX. All rights reserved.
+    </footer>
 
     <script>
         document.getElementById("urlForm").addEventListener("submit", async (e) => {
@@ -99,12 +127,14 @@
                     body: JSON.stringify({ name })
                 });
 
-                const text = await res.text();
+                const text = await res.json();
+                console.log(text);
                 responseDiv.style.color = res.ok ? "green" : "red";
-                responseDiv.innerHTML = `${text}<br>Click the link: <a href="${res.ok ? `/${name}` : "#"}" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
+                responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" target="_blank">${res.ok ? `/${name}` : "Error"}</a>`;
             } catch (err) {
                 responseDiv.style.color = "red";
                 responseDiv.textContent = "An error occurred. Please try again later.";
+                console.error(err);
             }
         });
     </script>
