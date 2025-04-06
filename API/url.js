@@ -5,10 +5,10 @@ const route = express.Router();
 
 route.post('/', async (req, res) =>{
     try{
-        const { name } = req.body;
+        const { name, description } = req.body;
         if (!name) return res.status(400).send("Name is required.");
         const formatName = name.replace(/[^a-zA-Z0-9]/g, '');
-        const result =  await addUrl(formatName);
+        const result =  await addUrl(formatName, description);
         res.status(result.status).send(result);
     }catch(error){
         console.error("Error adding URL:", error);

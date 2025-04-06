@@ -1,10 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const fs = require("fs");
 const { loadUrl } = require("./src/load-url");
-const { addUrl } = require("./src/add-url");
-const { getUrlList } = require("./src/list-url");
 const { loadAPIs } = require("./src/load-api");
 const app = express();
 const port = 3000;

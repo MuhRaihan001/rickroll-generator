@@ -41,11 +41,21 @@
   </video>
 
   <h1 class="text-3xl font-bold mb-2 animate-fade-in">Rick Roll Your Friend</h1>
-  <p class="text-sm mb-1 text-center max-w-md animate-fade-in animate-delay-1">Enter something to attract your friend.</p>
-  <p class="text-sm mb-6 text-center max-w-md animate-fade-in animate-delay-2">Example: free v bucks</p>
+  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-1">
+    Enter something to attract your friend.
+  </p>
+  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-2">
+    Example custom URL: free v bucks
+  </p>
+  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-2">
+    Example description: Get your free V Bucks
+  </p>
+  
 
-  <form id="urlForm" class="flex flex-col sm:flex-row gap-3 mb-4 animate-fade-in animate-delay-3">
+  <form id="urlForm" class="flex flex-col sm:flex gap-3 mb-4 animate-fade-in animate-delay-3">
     <input type="text" id="urlNameInput" placeholder="Enter URL name..." required
+           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72 text-black" />
+    <input type="text" id="description" placeholder="Enter description..." required
            class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72 text-black" />
     <button type="submit"
             class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-300">
@@ -66,6 +76,7 @@
     document.getElementById("urlForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const name = document.getElementById("urlNameInput").value.trim();
+      const description = document.getElementById("description").value.trim();
       const responseDiv = document.getElementById("response");
 
       if (!name) {
@@ -80,10 +91,15 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ name })
+          body: JSON.stringify({ name, description })
         });
 
         const text = await res.json();
+        if(text.status !== 200){
+          responseDiv.className = "text-red-500";
+          responseDiv.textContent = text.message;
+          return;
+        }
         responseDiv.className = "text-white";
         responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" class="underline" target="_blank">${res.ok ? `/${text.url}` : "Error"}</a>`;
       } catch (err) {
