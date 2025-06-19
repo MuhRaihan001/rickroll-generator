@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-900 text-white">
+
 <head>
   <meta charset="UTF-8">
   <title>Rick Roll URL Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes fade-in {
@@ -33,44 +35,47 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 text-white min-h-screen flex flex-col items-center justify-center px-4 relative">
 
-  <video autoplay loop muted class="fixed top-0 left-0 w-full h-full object-cover z-[-1] blur-md">
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+
+  <!-- Background Video -->
+  <video autoplay loop muted class="fixed top-0 left-0 w-full h-full object-cover z-[-1] blur-sm brightness-50">
     <source src="assets/therickroll.mp4">
     Your browser does not support the video tag.
   </video>
 
-  <h1 class="text-3xl font-bold mb-2 animate-fade-in">Rick Roll Your Friend</h1>
-  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-1">
-    Enter something to attract your friend.
-  </p>
-  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-2">
-    Example custom URL: free v bucks
-  </p>
-  <p class="text-sm mb-0.5 text-center max-w-md animate-fade-in animate-delay-2">
-    Example description: Get your free V Bucks
-  </p>
-  
+  <!-- Main Card -->
+  <div class="bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-lg max-w-md w-full animate-fade-in">
+    <h1 class="text-2xl font-semibold mb-3 text-center text-white">Rick Roll URL Generator</h1>
+    <p class="text-sm text-gray-300 text-center animate-delay-1">Create a disguised link and description to rickroll your friend.</p>
+    <p class="text-xs text-gray-400 mt-1 text-center animate-delay-2 italic">Example: <strong>free-vbucks</strong> <span class="mx-1">•</span> <strong>Get your free V Bucks</strong></p>
 
-  <form id="urlForm" class="flex flex-col sm:flex gap-3 mb-4 animate-fade-in animate-delay-3">
-    <input type="text" id="urlNameInput" placeholder="Enter URL name..." required
-           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72 text-black" />
-    <input type="text" id="description" placeholder="Enter description..." required
-           class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition w-72 text-black" />
-    <button type="submit"
-            class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-300">
-      Submit
-    </button>
-  </form>
+    <form id="urlForm" class="mt-6 space-y-4 animate-delay-3">
+      <div>
+        <label for="urlNameInput" class="block text-sm mb-1">Custom URL Name</label>
+        <input type="text" id="urlNameInput" placeholder="e.g. free-vbucks" required
+          class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+      </div>
+      <div>
+        <label for="description" class="block text-sm mb-1">Description</label>
+        <input type="text" id="description" placeholder="e.g. Get your free V Bucks" required
+          class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+      </div>
+      <button type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition">
+        Generate Link
+      </button>
+    </form>
 
-  <div id="response" class="text-sm text-white text-center max-w-md mb-4"></div>
+    <div id="response" class="text-sm text-center mt-4"></div>
 
-  <p class="text-xs text-white/70 text-center max-w-sm animate-fade-in animate-delay-3">
-    Disclaimer: This website is made for harmless fun. All generated links redirect to the Rick Astley video
-    "Never Gonna Give You Up" as a joke (Rick Roll). Please use responsibly and do not use it to deceive or harm others.
-  </p>
+    <p class="text-xs text-center text-gray-400 mt-6">
+      This tool is made for fun. Please use responsibly. All links redirect to Rick Astley’s iconic song.
+    </p>
+  </div>
 
-  <footer class="absolute bottom-2 text-xs text-white/70">&copy; 2025 TsumuX. All rights reserved.</footer>
+  <!-- Footer -->
+  <footer class="absolute bottom-3 text-xs text-gray-500 text-center w-full">&copy; 2025 TsumuX. All rights reserved.</footer>
 
   <script>
     document.getElementById("urlForm").addEventListener("submit", async (e) => {
@@ -80,7 +85,7 @@
       const responseDiv = document.getElementById("response");
 
       if (!name) {
-        responseDiv.className = "text-white";
+        responseDiv.className = "text-red-400";
         responseDiv.textContent = "URL name cannot be empty.";
         return;
       }
@@ -95,15 +100,15 @@
         });
 
         const text = await res.json();
-        if(text.status !== 200){
+        if (text.status !== 200) {
           responseDiv.className = "text-red-500";
           responseDiv.textContent = text.message;
           return;
         }
-        responseDiv.className = "text-white";
-        responseDiv.innerHTML = `${text.message}<br>Click the link: <a href="${res.ok ? `/${text.url}` : "#"}" class="underline" target="_blank">${res.ok ? `/${text.url}` : "Error"}</a>`;
+        responseDiv.className = "text-green-400";
+        responseDiv.innerHTML = `${text.message}<br><a href="/${text.url}" class="underline hover:text-blue-400 transition" target="_blank">/${text.url}</a>`;
       } catch (err) {
-        responseDiv.className = "text-white";
+        responseDiv.className = "text-red-400";
         responseDiv.textContent = "An error occurred. Please try again later.";
         console.error(err);
       }
@@ -111,4 +116,5 @@
   </script>
 
 </body>
+
 </html>
