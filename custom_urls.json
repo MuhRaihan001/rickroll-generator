@@ -10,5 +10,9 @@
   {
     "url": "freevbuck",
     "description": "Get your free v bucks"
+  },
+  {
+    "url": "helloworld",
+    "description": "wtf"
   }
 ]
